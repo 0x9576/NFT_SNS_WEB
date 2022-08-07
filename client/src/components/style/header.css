@@ -1,0 +1,52 @@
+/*header*/
+/*header-menu가 header의 자식일 경우*/
+
+/*a는 inline구조다. 전체 영역이 없기 때문에, text-align같은게 적용안됨*/
+/*부모인 header는 div이기 때문에 거기에 줘야 먹힌다.*/
+/*padding도 가로로만 먹히는데, 이 때, display: inline-block을 이용하여 인라인 블록구조를 가지게 할 수 있다.*/
+/*h1 태그는 블록구조이다. display: inline으로 해결*/
+.header {
+    border-bottom: 1px solid rgb(30, 30, 30);
+}
+
+.header .header-icon {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.header .header-icon a {
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    margin: 0px 20px;
+}
+
+.header .header-icon a.icon1 {
+    background: url(../../img/icon.png);
+    background-position: 465px -405px;
+}
+
+.header .header-icon a.icon2 {
+    background: url(../../img/icon.png);
+    background-position: 132px -405px;
+}
+
+.header .header-icon a.icon3 {
+    background: url(../../img/icon.png);
+    background-position: 211px -65px;
+}
+
+.header .header-icon a.icon4 {
+    background: url(../../img/icon.png);
+    background-position: -82px -240px;
+}
+
+.header .header-icon a.icon5 {
+    background: url(../../img/icon.png);
+    background-position: 45px -155px;
+}
+
+.header .header-icon a:hover {
+    border-bottom: solid 2px gray;
+}

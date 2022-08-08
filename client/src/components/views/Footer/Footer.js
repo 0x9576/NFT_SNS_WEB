@@ -6,4 +6,4 @@ function Footer() {
     <div>Footer</div>
   )
 }
-export default auth(Footer, true);
+export default Footer;

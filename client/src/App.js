@@ -5,8 +5,8 @@ import {
   Route,
 } from "react-router-dom";
 
-import Footer from "./components/views/Footer/Footer";
 import MainPage from './components/views/MainPage/MainPage';
+import UploadPage from "./components/views/UploadPage/UploadPage";
 
 //componet = element, Switch = Routes
 function App() {
@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<MainPage />} />
-        <Route exact path="/footer" element={<Footer />} />
+        <Route exact path="/upload" element={<UploadPage />} />
       </Routes>
     </BrowserRouter>
   );

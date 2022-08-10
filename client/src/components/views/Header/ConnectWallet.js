@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { connectWallet } from "../../../_actions/user_action";
-import { useDispatch } from 'react-redux';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
 function ConnectWallet() {
     const dispatch = useDispatch();

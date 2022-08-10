@@ -17,9 +17,9 @@ function MainPage() {
     <div>
       <Header />
       <h2>시작 페이지</h2>
-      {/* <div>
+      <div>
         <Footer />
-      </div> */}
+      </div>
     </div>
   )
 }

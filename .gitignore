@@ -25,3 +25,7 @@ note.txt
 
 #file storage
 uploads
+
+#Solidity
+@openzeppelin
+artifacts

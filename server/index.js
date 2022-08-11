@@ -4,12 +4,12 @@ const port = 2400
 
 const bodyParser = require('body-parser');
 
-const config = require('./server/config/key') //Mongo db를 가져온다.
+const config = require('./config/key') //Mongo db를 가져온다.
 
 app.use(bodyParser.urlencoded({ extended: true }));//문자열로 된 것을 분석
 app.use(bodyParser.json()); //Json타입으로 된 것을 분석
 
-app.use('/api/feed', require('./server/routes/feed'));
+app.use('/api/feed', require('./routes/feed'));
 
 
 app.use('/uploads', express.static('uploads'));

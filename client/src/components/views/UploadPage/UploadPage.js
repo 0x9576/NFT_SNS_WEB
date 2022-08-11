@@ -6,12 +6,14 @@ import { useSelector } from "react-redux";
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Dropzone from 'react-dropzone';
+import SHA256, { encodeBase64 } from '../../../utils/SHA256';
 
 function UploadPage() {
     let naviate = useNavigate();
     let formData = new FormData;
     const [filePath, setFilePath] = useState("")
     const [description, setDescription] = useState("");
+    const [fileHash, setFileHash] = useState("");
 
     let accountAddress = useSelector(state => state.account.account);
     if (accountAddress)
@@ -34,6 +36,12 @@ function UploadPage() {
                 console.log(response);
                 if (response.data.success) {
                     setFilePath(response.data.url);
+                    encodeBase64('http://localhost:2400/' + filePath)
+                        .then(data => {
+                            const base64 = data;
+                            setFileHash(SHA256(base64));
+                        })
+                    console.log(fileHash);
                 }
                 else {
                     alert('사진 업로드 실패');
@@ -81,7 +89,7 @@ function UploadPage() {
                         {filePath ?
                             //path에 뭔가 있을 때만 미리보기 생성.
                             <div>
-                                <img src={`http://localhost:2400/${filePath}`} alt="preview" />
+                                <img id="preview" src={`http://localhost:2400/${filePath}`} alt="preview" />
                             </div> :
                             <div>사진을 여기에 끌어다 주세요</div>
                         }

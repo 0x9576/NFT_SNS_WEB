@@ -14,7 +14,7 @@ contract MintSNSToken is ERC721Enumerable {
 
     mapping(uint256 => SNSTokenData) public SNSTokenDataMap;
 
-    function mintAnimalToken(string memory _value) public {
+    function mintSNSToken(string memory _value) public {
         uint256 tokenId = totalSupply() + 1;
         SNSTokenDataMap[tokenId] = SNSTokenData(tokenId, _value, 0);
         _mint(msg.sender, tokenId);

@@ -7,13 +7,14 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Dropzone from 'react-dropzone';
 import SHA256, { encodeBase64 } from '../../../utils/SHA256';
+import { SNSTokenAddress, SNSTokenContract } from '../../../contracts';
 
 function UploadPage() {
     let naviate = useNavigate();
     let formData = new FormData;
     const [filePath, setFilePath] = useState("")
     const [description, setDescription] = useState("");
-    const [fileHash, setFileHash] = useState("");
+    const [fileHash, setFileHash] = useState(""); //Image file => Base64 => HashValue(SHA256)
 
     let accountAddress = useSelector(state => state.account.account);
     if (accountAddress)
@@ -36,12 +37,10 @@ function UploadPage() {
                 console.log(response);
                 if (response.data.success) {
                     setFilePath(response.data.url);
-                    encodeBase64('http://localhost:2400/' + filePath)
-                        .then(data => {
-                            const base64 = data;
-                            setFileHash(SHA256(base64));
-                        })
-                    console.log(fileHash);
+                    encodeBase64(files[0]).then(function (result) {
+                        const base64String = result;
+                        setFileHash(SHA256(base64String));
+                    })
                 }
                 else {
                     alert('사진 업로드 실패');
@@ -49,13 +48,21 @@ function UploadPage() {
             })
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
+        document.getElementById("preview");
+        try {
+            const response = await SNSTokenContract.methods
+                .mintSNSToken(fileHash)
+                .send({ from: accountAddress });
+        } catch (error) {
+            console.log(error);
+        }
         const variables = {
             writer: accountAddress,
             description: description,
             filePath: filePath,
-            contractAddress: "",
+            contractAddress: SNSTokenAddress,
             tokenNum: "",
         }
         Axios.post('/api/feed/uploadFeed', variables)

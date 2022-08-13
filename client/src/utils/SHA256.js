@@ -342,18 +342,15 @@ function SHA256(s) {
 export default SHA256;
 
 
-export function encodeBase64(url) {
-    return new Promise((resolve, reject) => {
-        let xhr = new XMLHttpRequest()
-        xhr.onload = () => {
-            let reader = new FileReader()
-            reader.onloadend = function () {
-                resolve(reader.result)
-            }
-            reader.readAsDataURL(xhr.response)
+export function encodeBase64(file) {
+    return new Promise(function (resolve, reject) {
+        const reader = new window.FileReader()
+        reader.readAsArrayBuffer(file);
+        reader.onloadend = function () {
+            const buffer = Buffer.from(reader.result)
+            const base64String = buffer.toString('base64');
+            //this.result = base64String;
+            resolve(base64String)
         }
-        xhr.open('GET', url)
-        xhr.responseType = 'blob'
-        xhr.send()
     })
 }

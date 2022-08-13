@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { Feed } = require('../models/Feed');
+var fs = require('fs');
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -31,8 +32,8 @@ router.post("/uploadPhoto", (req, res) => {
 });
 
 router.post("/uploadFeed", (req, res) => {
-    //비디오 정보 저장
-    const feed = new Feed(req.body); //body에는 넣었던 video request정보들이 저장된다.
+    const feed = new Feed(req.body);
+    const path = req.body.filePath;
     feed.save((err, doc) => {
         if (err) return res.json({ success: false, err })
         res.status(200).json({ success: true })

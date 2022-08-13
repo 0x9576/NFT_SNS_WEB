@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import Auth from '../../../hoc/auth';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,10 @@ import Header from '../Header/Header';
 import Dropzone from 'react-dropzone';
 import SHA256, { encodeBase64 } from '../../../utils/SHA256';
 import { SNSTokenAddress, SNSTokenContract } from '../../../contracts';
+import GoogleMap from 'google-map-react';
+import { GoogleMapAPI_Key } from '../../../utils/API_Key';
+import Geocode from "react-geocode";
+import { getLocation, getLocationInfo } from '../../../utils/getLocation';
 
 function UploadPage() {
     let naviate = useNavigate();
@@ -15,17 +19,33 @@ function UploadPage() {
     const [filePath, setFilePath] = useState("")
     const [description, setDescription] = useState("");
     const [fileHash, setFileHash] = useState(""); //Image file => Base64 => HashValue(SHA256)
+    const [latitude, setLatitude] = useState(37.5);
+    const [longitude, setLongitude] = useState(127);
+    const [locationInfo, setLocationInfo] = useState("")
 
     let accountAddress = useSelector(state => state.account.account);
-    if (accountAddress)
+    if (accountAddress) {
         accountAddress = accountAddress.account;
-    else
+    }
+    else {
         accountAddress = "";
+    }
+
+    useEffect(() => {
+        getLocation().then(result => (
+            setLatitude(result.latitude)
+            , setLongitude(result.longitude)))
+    }, [])
+
+    useEffect(() => {
+        if (latitude == 37.5 && longitude == 127) return;
+        getLocationInfo(latitude, longitude).then(result => setLocationInfo(result))
+    }, [latitude, longitude])
+
 
     const onDrop = (files) => {
-        console.log(files);
+        console.log(locationInfo);
         formData.append("file", files[0]);
-
         const config = {
             header: { 'content-type': 'multipart/form-data' }
         }
@@ -34,7 +54,6 @@ function UploadPage() {
         Axios.post('/api/feed/uploadPhoto', formData, config)
             .then(response => {
                 //미리보기 생성을 위해 사진을 저장 후 보여준다
-                console.log(response);
                 if (response.data.success) {
                     setFilePath(response.data.url);
                     encodeBase64(files[0]).then(function (result) {
@@ -106,6 +125,14 @@ function UploadPage() {
 
             <div>설명</div>
             <textarea id="textarea" rows="4" cols="78" onChange={e => setDescription(e.target.value)} />
+            <div style={{ height: '200px', width: '300px' }}>
+                <GoogleMap
+                    bootstrapURLKeys={{ key: GoogleMapAPI_Key }}
+                    defaultZoom={17}
+                    center={{ lat: latitude, lng: longitude }} //현재 위치로 center가 바뀜.
+                />
+            </div>
+            <h4 style={{ marginBottom: '40px' }}>{locationInfo}</h4>
             <button onClick={onSubmit}>게시글 등록하기</button>
             <Footer />
         </div>

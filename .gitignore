@@ -29,3 +29,6 @@ uploads
 #Solidity
 @openzeppelin
 artifacts
+
+dev.js
+API_Key.js

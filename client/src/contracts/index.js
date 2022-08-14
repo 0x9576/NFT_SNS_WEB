@@ -85,7 +85,13 @@ const SNSTokenABI = [
 			}
 		],
 		"name": "mintSNSToken",
-		"outputs": [],
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -248,11 +254,11 @@ const SNSTokenABI = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "idx",
+				"name": "id",
 				"type": "uint256"
 			}
 		],
-		"name": "getTokenMapInfo",
+		"name": "getTokenInfoById",
 		"outputs": [
 			{
 				"components": [
@@ -474,7 +480,7 @@ const SNSTokenABI = [
 	}
 ];
 //컨트랙트 주소
-export const SNSTokenAddress = "0x315744f64C1Eb1850935e48614fc57B550639a51";
+export const SNSTokenAddress = "0x1B5101013D9FAF39Ac8F20c271187a43d15bF8fa";
 
 export const web3 = new Web3(window.ethereum);
 

@@ -21,7 +21,8 @@ function UploadPage() {
     const [fileHash, setFileHash] = useState(""); //Image file => Base64 => HashValue(SHA256)
     const [latitude, setLatitude] = useState(37.5);
     const [longitude, setLongitude] = useState(127);
-    const [locationInfo, setLocationInfo] = useState("")
+    const [locationInfo, setLocationInfo] = useState("");
+    const [locationShared, setLocationShared] = useState(true);
 
     let accountAddress = useSelector(state => state.account.account);
     if (accountAddress) {
@@ -44,7 +45,6 @@ function UploadPage() {
 
 
     const onDrop = (files) => {
-        console.log(locationInfo);
         formData.append("file", files[0]);
         const config = {
             header: { 'content-type': 'multipart/form-data' }
@@ -62,6 +62,7 @@ function UploadPage() {
                     })
                 }
                 else {
+                    console.log(response);
                     alert('사진 업로드 실패');
                 }
             })
@@ -70,19 +71,34 @@ function UploadPage() {
     const onSubmit = async (e) => {
         e.preventDefault();
         document.getElementById("preview");
+        let tokenNum = "1";
         try {
-            const response = await SNSTokenContract.methods
+            await SNSTokenContract.methods
                 .mintSNSToken(fileHash)
                 .send({ from: accountAddress });
+            tokenNum = await SNSTokenContract.methods
+                .totalSupply()
+                .call();
+            console.log(tokenNum);
         } catch (error) {
             console.log(error);
+            alert('업로드 실패: 트랜잭션 오류');
+            return;
+        }
+        if (!locationShared) {
+            setLatitude(0);
+            setLongitude(0);
+            setLocationInfo("");
         }
         const variables = {
             writer: accountAddress,
             description: description,
             filePath: filePath,
             contractAddress: SNSTokenAddress,
-            tokenNum: "",
+            tokenNum: String(tokenNum),
+            latitude: latitude,
+            longitude: longitude,
+            locationInfo: locationInfo
         }
         Axios.post('/api/feed/uploadFeed', variables)
             .then(response => {
@@ -93,7 +109,7 @@ function UploadPage() {
                         naviate('/');
                     }, 0.5);
                 } else {
-                    alert('업로드 실패');
+                    alert('업로드 실패 DB오류');
                 }
             })
     }
@@ -101,7 +117,6 @@ function UploadPage() {
     return (
         <div>
             <Header />
-            <h2>업로드 페이지</h2>
             <Dropzone
                 onDrop={onDrop}
                 multiple={false} //다중파일여부
@@ -122,8 +137,6 @@ function UploadPage() {
                     </div>
                 )}
             </Dropzone>
-
-            <div>설명</div>
             <textarea id="textarea" rows="4" cols="78" onChange={e => setDescription(e.target.value)} />
             <div style={{ height: '200px', width: '300px' }}>
                 <GoogleMap
@@ -132,7 +145,10 @@ function UploadPage() {
                     center={{ lat: latitude, lng: longitude }} //현재 위치로 center가 바뀜.
                 />
             </div>
-            <h4 style={{ marginBottom: '40px' }}>{locationInfo}</h4>
+            <h4>{locationInfo}</h4>
+            <div style={{ marginBottom: '20px' }}>위치정보 공유
+                <input type="checkbox" checked={locationShared} onChange={e => setLocationShared(!locationShared)} />
+            </div>
             <button onClick={onSubmit}>게시글 등록하기</button>
             <Footer />
         </div>

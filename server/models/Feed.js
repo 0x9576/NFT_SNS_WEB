@@ -17,6 +17,15 @@ const feedSchema = mongoose.Schema({
     tokenNum: {
         type: String
     },
+    latitude: {
+        type: Number
+    },
+    longitude: {
+        type: Number
+    },
+    locationInfo: {
+        type: String
+    },
 }, { timestamps: true })
 
 const Feed = mongoose.model('Feed', feedSchema);

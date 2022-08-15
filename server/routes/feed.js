@@ -40,4 +40,12 @@ router.post("/uploadFeed", (req, res) => {
     }); //mongo db에 저장함.
 });
 
+router.get('/getFeeds', (req, res) => {
+    Feed.find()
+        .exec((err, feeds) => {
+            if (err) return res.status(400).send(err);
+            res.status(200).json({ success: true, feeds })
+        })
+});
+
 module.exports = router;

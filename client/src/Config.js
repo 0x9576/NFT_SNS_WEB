@@ -1,0 +1,1 @@
+export const ftmNode = "https://testnet.ftmscan.com/";

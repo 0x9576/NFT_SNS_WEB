@@ -86,8 +86,8 @@ function UploadPage() {
             return;
         }
         if (!locationShared) {
-            setLatitude(0);
-            setLongitude(0);
+            setLatitude(-1);
+            setLongitude(-1);
             setLocationInfo("");
         }
         const variables = {
@@ -116,7 +116,6 @@ function UploadPage() {
 
     return (
         <div>
-            <Header />
             <Dropzone
                 onDrop={onDrop}
                 multiple={false} //다중파일여부
@@ -150,7 +149,6 @@ function UploadPage() {
                 <input type="checkbox" checked={locationShared} onChange={e => setLocationShared(!locationShared)} />
             </div>
             <button onClick={onSubmit}>게시글 등록하기</button>
-            <Footer />
         </div>
     )
 }

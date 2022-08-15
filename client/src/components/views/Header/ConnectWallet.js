@@ -19,8 +19,8 @@ function ConnectWallet() {
 
     return (
         String(accountAddress).length !== 0 ?
-            <button>My wallet : {String(accountAddress).substring(0, 6)} ...</button>
-            : <button onClick={connectWallet}>Connect</button>);
+            <button style={{ width: '150px' }}>My wallet : {String(accountAddress).substring(0, 6)} ...</button >
+            : <button style={{ width: '150px' }} onClick={connectWallet}>Connect</button>);
 }
 
 export default ConnectWallet

@@ -1,25 +1,43 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import Axios from 'axios'
 import Auth from '../../../hoc/auth';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
+import { ftmNode } from '../../../Config';
 
 function MainPage() {
   let naviate = useNavigate();
 
+
+  const [feed, setFeed] = useState([])
+
   useEffect(() => {
-    axios.get('/api/test') //get request를 보냄.
-      .then(response => console.log(response.data)) // response를 출력.
+    Axios.get('/api/feed/getFeeds')
+      .then(response => {
+        if (response.data.success) {
+          setFeed(response.data.feeds)
+        }
+        else {
+          alert('피드 가져오기 실패');
+        }
+      })
   }, [])
+  const renderFeeds = feed.map((feed, index) => {
+    return (
+      <div key={feed._id}>
+        <h4>{feed.writer}</h4>
+        <img style={{ width: '400px' }} src={`http://localhost:2400/${feed.filePath}`} alt="image" />
+        <h4>{feed.description}</h4>
+        <h4>{feed.locationInfo}</h4>
+        <h4>token: {feed.tokenNum}</h4>
+        <h4>contract: {feed.contractAddress}</h4>
+        <a href={ftmNode + "/token/" + feed.contractAddress + "?a=" + feed.tokenNum + "#inventory"}>go to explorer</a>
+      </div>
+    )
+  })
 
   return (
     <div>
-      <Header />
-      <h2>시작 페이지</h2>
-      <div>
-        <Footer />
-      </div>
+      {renderFeeds}
     </div>
   )
 }

@@ -3,6 +3,8 @@ import Axios from 'axios'
 import Auth from '../../../hoc/auth';
 import { useNavigate } from 'react-router-dom';
 import { ftmNode } from '../../../Config';
+import "../../style/feed.css";
+import "../../style/reset.css";
 
 function MainPage() {
   let naviate = useNavigate();
@@ -23,20 +25,21 @@ function MainPage() {
   }, [])
   const renderFeeds = feed.map((feed, index) => {
     return (
-      <div key={feed._id}>
-        <h4>{feed.writer}</h4>
-        <img style={{ width: '400px' }} src={`http://localhost:2400/${feed.filePath}`} alt="image" />
-        <h4>{feed.description}</h4>
+      <div id='wrapper' key={feed._id}>
+        <div id='header_feed'>
+          <a href={'/profile/' + feed.writer}>{feed.writer.substring(0, 10)}... </a>
+          <a id="explorer_icon" href={ftmNode + "/token/" + feed.contractAddress + "?a=" + feed.tokenNum + "#inventory"}
+            className="explorer_icon"><span className="ir_pm">go to explorer</span></a>
+        </div>
         <h4>{feed.locationInfo}</h4>
-        <h4>token: {feed.tokenNum}</h4>
-        <h4>contract: {feed.contractAddress}</h4>
-        <a href={ftmNode + "/token/" + feed.contractAddress + "?a=" + feed.tokenNum + "#inventory"}>go to explorer</a>
+        <img style={{ width: '400px' }} src={`http://localhost:2400/${feed.filePath}`} alt="feed image" />
+        <h4>{feed.description}</h4>
       </div>
     )
   })
 
   return (
-    <div>
+    <div id='contents'>
       {renderFeeds}
     </div>
   )

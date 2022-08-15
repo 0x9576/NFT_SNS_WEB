@@ -32,7 +32,9 @@ form {
 
 /*a link 초기화*/
 a {
+    font-size: 23px;
     color: #222;
+    font-weight: bold;
     text-decoration: none;
 }
 

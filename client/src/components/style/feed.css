@@ -1,0 +1,25 @@
+#contents {
+    width: 100%;
+    text-align: center;
+}
+
+#contents #wrapper {
+    width: 600px;
+    margin: auto;
+    margin-bottom: 60px;
+}
+
+#contents #wrapper #header_feed {
+    position: relative;
+    height: 50px;
+}
+
+#contents #wrapper #header_feed #explorer_icon {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    top: -13px;
+    right: 50px;
+    background: url(../../img/icon.png);
+    background-position: 465px -480px;
+}

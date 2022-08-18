@@ -52,6 +52,10 @@ contract SNSToken is ERC721Enumerable {
         SNSTokenDataMap[_tokenId].tokenPrice = _price;
     }
 
+    function getPrice(uint256 _tokenId) public view returns (uint256) {
+        return SNSTokenDataMap[_tokenId].tokenPrice;
+    }
+
     //토큰 구매
     function purchaseToken(uint256 _tokenId) public payable {
         uint256 price = SNSTokenDataMap[_tokenId].tokenPrice;

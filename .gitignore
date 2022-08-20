@@ -30,5 +30,6 @@ uploads
 @openzeppelin
 artifacts
 
+#key
 dev.js
 API_Key.js

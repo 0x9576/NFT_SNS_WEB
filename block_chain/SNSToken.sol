@@ -16,7 +16,7 @@ contract SNSToken is ERC721Enumerable {
 
     //mint
     function mintSNSToken(string memory _value) public returns (uint256) {
-        uint256 tokenId = totalSupply() + 1;
+        uint256 tokenId = totalSupply();
         SNSTokenDataMap[tokenId] = SNSTokenData(tokenId, _value, 0);
         _mint(msg.sender, tokenId);
         return tokenId;
@@ -29,6 +29,35 @@ contract SNSToken is ERC721Enumerable {
         returns (SNSTokenData memory)
     {
         return SNSTokenDataMap[id];
+    }
+
+    //모든 토큰 정보 출력
+    function getAllTokensInfo() public view returns (SNSTokenData[] memory) {
+        uint256 totalLength = totalSupply();
+        SNSTokenData[] memory SNSTokenDataArray = new SNSTokenData[](
+            totalLength
+        );
+        for (uint256 i = 0; i < totalLength; i++) {
+            SNSTokenDataArray[i] = getTokenInfoById(i);
+        }
+        return SNSTokenDataArray;
+    }
+
+    //특정 사용자 토큰들 출력
+    function getTokensInfoByAccount(address _account)
+        public
+        view
+        returns (SNSTokenData[] memory)
+    {
+        uint256 balanceLength = balanceOf(_account);
+        SNSTokenData[] memory SNSTokenDataArray = new SNSTokenData[](
+            balanceLength
+        );
+        for (uint256 i = 0; i < balanceLength; i++) {
+            uint256 id = tokenOfOwnerByIndex(_account, i);
+            SNSTokenDataArray[i] = getTokenInfoById(id);
+        }
+        return SNSTokenDataArray;
     }
 
     //price getter

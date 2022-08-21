@@ -40,8 +40,16 @@ router.post("/uploadFeed", (req, res) => {
     }); //mongo db에 저장함.
 });
 
-router.get('/getFeeds', (req, res) => {
+router.get('/getAllFeeds', (req, res) => {
     Feed.find()
+        .exec((err, feeds) => {
+            if (err) return res.status(400).send(err);
+            res.status(200).json({ success: true, feeds })
+        })
+});
+
+router.post('/getFeedsByWriter', (req, res) => {
+    Feed.find({ "writer": req.body.writer })
         .exec((err, feeds) => {
             if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, feeds })

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connectWallet } from "../../../_actions/user_action";
 import { useDispatch, useSelector } from 'react-redux';
 

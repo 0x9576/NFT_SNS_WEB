@@ -7,13 +7,10 @@ import "../../style/feed.css";
 import "../../style/reset.css";
 
 function MainPage() {
-  let naviate = useNavigate();
-
-
   const [feed, setFeed] = useState([])
 
   useEffect(() => {
-    Axios.get('/api/feed/getFeeds')
+    Axios.get('/api/feed/getAllFeeds')
       .then(response => {
         if (response.data.success) {
           setFeed(response.data.feeds)
@@ -23,6 +20,7 @@ function MainPage() {
         }
       })
   }, [])
+
   const renderFeeds = feed.map((feed, index) => {
     return (
       <div id='wrapper' key={feed._id}>

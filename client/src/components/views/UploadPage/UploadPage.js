@@ -3,14 +3,11 @@ import Axios from 'axios'
 import Auth from '../../../hoc/auth';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
 import Dropzone from 'react-dropzone';
 import SHA256, { encodeBase64 } from '../../../utils/SHA256';
 import { SNSTokenAddress, SNSTokenContract } from '../../../contracts';
 import GoogleMap from 'google-map-react';
 import { GoogleMapAPI_Key } from '../../../utils/API_Key';
-import Geocode from "react-geocode";
 import { getLocation, getLocationInfo } from '../../../utils/getLocation';
 
 function UploadPage() {

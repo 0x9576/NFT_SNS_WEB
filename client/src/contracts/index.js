@@ -1,7 +1,6 @@
 import Web3 from "web3";
 
 // AbiItem: 스마트 컨트랙트 인터페이스가 정의된 파일
-
 const SNSTokenABI = [
 	{
 		"inputs": [],
@@ -165,6 +164,24 @@ const SNSTokenABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "new_price",
+				"type": "uint256"
+			}
+		],
+		"name": "setTokenPrice",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -232,6 +249,36 @@ const SNSTokenABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "getAllTokensInfo",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "value",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenPrice",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct SNSToken.SNSTokenData[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -278,9 +325,64 @@ const SNSTokenABI = [
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct MintSNSToken.SNSTokenData",
+				"internalType": "struct SNSToken.SNSTokenData",
 				"name": "",
 				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getTokenPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_account",
+				"type": "address"
+			}
+		],
+		"name": "getTokensInfoByAccount",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "value",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenPrice",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct SNSToken.SNSTokenData[]",
+				"name": "",
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
@@ -479,12 +581,77 @@ const SNSTokenABI = [
 		"type": "function"
 	}
 ];
+const MarketSNSTokenABI = [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "buyToken",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_price",
+				"type": "uint256"
+			}
+		],
+		"name": "sellToken",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_SNSTokenAddress",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "SNSTokenAddress",
+		"outputs": [
+			{
+				"internalType": "contract SNSToken",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+
 //컨트랙트 주소
-export const SNSTokenAddress = "0x1B5101013D9FAF39Ac8F20c271187a43d15bF8fa";
+export const SNSTokenAddress = "0xC9D4715653f29cB282Bf8772a446f1e45bF3BD21";
+const MarketSNSTokenAddress = "0x1be7B2d7aFCC15aC24Cf0E5284ecdFE7e1b94dbf";
 
 export const web3 = new Web3(window.ethereum);
 
+//컨트랙트 구현
 export const SNSTokenContract = new web3.eth.Contract(
 	SNSTokenABI,
 	SNSTokenAddress
+);
+
+export const MarketSNSTokenContract = new web3.eth.Contract(
+	MarketSNSTokenABI,
+	MarketSNSTokenAddress
 );

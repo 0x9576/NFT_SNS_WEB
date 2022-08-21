@@ -1,0 +1,17 @@
+#contents {
+    width: 100%;
+    text-align: center;
+}
+
+#contents #wrapper {
+    width: 600px;
+    margin: auto;
+}
+
+#contents #wrapper .my_feed {
+    width: 170px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    border: 1px solid gray;
+}

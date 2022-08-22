@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
 import Auth from '../../../hoc/auth';
-import { useNavigate } from 'react-router-dom';
 import { ftmNode } from '../../../Config';
-import "../../style/feed.css";
-import "../../style/reset.css";
 
 function MainPage() {
   const [feed, setFeed] = useState([])
@@ -37,7 +34,7 @@ function MainPage() {
   })
 
   return (
-    <div id='contents'>
+    <div id='contents_feed'>
       {renderFeeds}
     </div>
   )

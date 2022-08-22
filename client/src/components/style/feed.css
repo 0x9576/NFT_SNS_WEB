@@ -1,20 +1,20 @@
-#contents {
+#contents_feed {
     width: 100%;
     text-align: center;
 }
 
-#contents #wrapper {
+#contents_feed #wrapper {
     width: 600px;
     margin: auto;
     margin-bottom: 60px;
 }
 
-#contents #wrapper #header_feed {
+#contents_feed #wrapper #header_feed {
     position: relative;
     height: 50px;
 }
 
-#contents #wrapper #header_feed #explorer_icon {
+#contents_feed #wrapper #header_feed #explorer_icon {
     width: 45px;
     height: 45px;
     position: absolute;

@@ -11,6 +11,8 @@ import MainPage from './components/views/MainPage/MainPage';
 import UploadPage from "./components/views/UploadPage/UploadPage";
 import ProfilePage from "./components/views/ProfilePage/ProfilePage";
 
+import "./components/style/var.css";
+
 //componet = element, Switch = Routes
 function App() {
   return (

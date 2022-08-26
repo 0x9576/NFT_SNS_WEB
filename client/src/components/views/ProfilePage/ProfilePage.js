@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Axios from 'axios';
 import Auth from '../../../hoc/auth';
 import "../../style/reset.css";
-import { SNSTokenContract } from '../../../contracts';
+import { MarketSNSTokenContract, SNSTokenContract } from '../../../contracts';
 
 function ProfilePage() {
     const [feed, setFeed] = useState([]);
@@ -57,26 +57,36 @@ function ProfilePage() {
             })
     }, [accountAddress])
 
-    const renderPrice = (SNSTokenArray, idx) => {
-        const price = SNSTokenArray[idx].tokenPrice;
+    const onClickSale = async (tokenId, price) => {
+        try {
+            await MarketSNSTokenContract.methods
+                .sellToken(tokenId, price)
+                .send({ from: accountAddress });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const renderPrice = (SNSToken) => {
+        const price = SNSToken.tokenPrice;
         if (price === "0")
             return (
                 <div>
-                    <input className="input_price" type="text"></input>FTM
-                    < button className='sell_button' > sell</button >
+                    <input id="price" className="input_price" type="text"></input>FTM
+                    < button className='sell_button' onClick={event => onClickSale(SNSToken.tokenId,
+                        document.getElementById("price").value)}> sell</button >
                 </div>
             )
         return (
             <div>{price} FTM</div>
         )
-
     }
 
     const renderMyFeeds = feed.map((feed, index) => {
         return (
             <div className='my_feed' key={feed._id}>
                 <img className='my_image' src={`http://localhost:2400/${feed.filePath}`} alt="feed image" />
-                {SNSTokenArray.length == 0 ? (<h4>FTM</h4>) : renderPrice(SNSTokenArray, index)}
+                {SNSTokenArray.length == 0 ? (<h4>FTM</h4>) : renderPrice(SNSTokenArray[index])}
             </div>
         )
     })

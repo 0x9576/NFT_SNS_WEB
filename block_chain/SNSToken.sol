@@ -8,6 +8,7 @@ contract SNSToken is ERC721Enumerable {
 
     struct SNSTokenData {
         uint256 tokenId;
+        address tokenCreator;
         string value; //hash value of photo
         uint256 tokenPrice;
     }
@@ -17,7 +18,7 @@ contract SNSToken is ERC721Enumerable {
     //mint
     function mintSNSToken(string memory _value) public returns (uint256) {
         uint256 tokenId = totalSupply();
-        SNSTokenDataMap[tokenId] = SNSTokenData(tokenId, _value, 0);
+        SNSTokenDataMap[tokenId] = SNSTokenData(tokenId, msg.sender, _value, 0);
         _mint(msg.sender, tokenId);
         return tokenId;
     }
@@ -41,6 +42,16 @@ contract SNSToken is ERC721Enumerable {
             SNSTokenDataArray[i] = getTokenInfoById(i);
         }
         return SNSTokenDataArray;
+    }
+
+    //index: token, value: owner
+    function getAllTokensOwner() public view returns (address[] memory) {
+        uint256 totalLength = totalSupply();
+        address[] memory addressArray = new address[](totalLength);
+        for (uint256 i = 0; i < totalLength; i++) {
+            addressArray[i] = ownerOf(i);
+        }
+        return addressArray;
     }
 
     //특정 사용자 토큰들 출력

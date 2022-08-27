@@ -86,7 +86,7 @@ function ProfilePage() {
         return (
             <div className='my_feed' key={feed._id}>
                 <img className='my_image' src={`http://localhost:2400/${feed.filePath}`} alt="feed image" />
-                {SNSTokenArray.length == 0 ? (<h4>FTM</h4>) : renderPrice(SNSTokenArray[index])}
+                {SNSTokenArray.length === 0 ? (<h4>FTM</h4>) : renderPrice(SNSTokenArray[feed.tokenNum])}
             </div>
         )
     })
@@ -95,27 +95,6 @@ function ProfilePage() {
         <div id='contents_profile'>
             <div id='wrapper'>
                 {renderMyFeeds}
-                <div className='my_feed'>
-                    <img className='my_image' src={`http://localhost:2400/uploads/1660482458565_aapx.jpeg`} alt="feed image" />
-                    <h4>10FTM</h4>
-                </div>
-                <div className='my_feed'>
-                    <img className='my_image' src={`http://localhost:2400/uploads/1660482458565_aapx.jpeg`} alt="feed image" />
-                    <input className="input_price" type="text"></input>FTM
-                    <button className='sell_button'>sell</button>
-                </div>
-                <div className='my_feed'>
-                    <img className='my_image' src={`http://localhost:2400/uploads/1660482458565_aapx.jpeg`} alt="feed image" />
-                    <h4>10FTM</h4>
-                </div>
-                <div className='my_feed'>
-                    <img className='my_image' src={`http://localhost:2400/uploads/1660482458565_aapx.jpeg`} alt="feed image" />
-                    <h4>10FTM</h4>
-                </div>
-                <div className='my_feed'>
-                    <img className='my_image' src={`http://localhost:2400/uploads/1660482458565_aapx.jpeg`} alt="feed image" />
-                    <h4>10FTM</h4>
-                </div>
             </div>
         </div>
     );

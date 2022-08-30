@@ -4,7 +4,8 @@ import Axios from 'axios';
 import Auth from '../../../hoc/auth';
 import { MarketSNSTokenContract, SNSTokenContract } from '../../../contracts';
 
-function ProfilePage() {
+
+function MarketPage() {
     const [feed, setFeed] = useState([]);
     const [SNSTokenArray, setSNSTokenArray] = useState([]);
     let accountAddress = useSelector(state => state.account.account);
@@ -14,7 +15,6 @@ function ProfilePage() {
     else {
         accountAddress = "";
     }
-
     const getTokensInfo = async () => {
         try {
             const tempArray = [];
@@ -43,8 +43,7 @@ function ProfilePage() {
         //accountAddress에서 값을 받아오지 않았다면, 요청하지 않음.
         if (accountAddress === "")
             return;
-        const variables = { writer: accountAddress };
-        Axios.post('/api/feed/getFeedsByWriter', variables)
+        Axios.get('/api/feed/getAllFeeds')
             .then(response => {
                 console.log(response);
                 if (response.data.success) {
@@ -55,6 +54,7 @@ function ProfilePage() {
                 }
             })
     }, [accountAddress])
+
 
     const onClickSale = async (tokenId, price) => {
         try {
@@ -99,4 +99,4 @@ function ProfilePage() {
     );
 }
 
-export default Auth(ProfilePage, true);
+export default Auth(MarketPage, true);

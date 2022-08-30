@@ -12,6 +12,7 @@ import UploadPage from "./components/views/UploadPage/UploadPage";
 import ProfilePage from "./components/views/ProfilePage/ProfilePage";
 
 import "./components/style/var.css";
+import MarketPage from "./components/views/MarketPage.js/MarketPage";
 
 //componet = element, Switch = Routes
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/" element={<MainPage />} />
         <Route exact path="/upload" element={<UploadPage />} />
         <Route exact path="/profile" element={<ProfilePage />} />
+        <Route exact path="/market" element={<MarketPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

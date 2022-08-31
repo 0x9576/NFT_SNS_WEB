@@ -68,7 +68,7 @@ function UploadPage() {
     const onSubmit = async (e) => {
         e.preventDefault();
         document.getElementById("preview");
-        let tokenNum = "1";
+        let tokenNum = "0";
         try {
             await SNSTokenContract.methods
                 .mintSNSToken(fileHash)
@@ -76,7 +76,7 @@ function UploadPage() {
             tokenNum = await SNSTokenContract.methods
                 .totalSupply()
                 .call();
-            console.log(tokenNum);
+            console.log(tokenNum - 1);
         } catch (error) {
             console.log(error);
             alert('업로드 실패: 트랜잭션 오류');
@@ -92,7 +92,7 @@ function UploadPage() {
             description: description,
             filePath: filePath,
             contractAddress: SNSTokenAddress,
-            tokenNum: String(tokenNum),
+            tokenNum: String(tokenNum - 1),
             latitude: latitude,
             longitude: longitude,
             locationInfo: locationInfo

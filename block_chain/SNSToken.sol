@@ -23,7 +23,7 @@ contract SNSToken is ERC721Enumerable {
         return tokenId;
     }
 
-    //토큰 정보 확인
+    //토큰 정보 확인z
     function getTokenInfoById(uint256 id)
         public
         view

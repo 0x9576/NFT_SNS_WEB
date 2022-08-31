@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import Axios from 'axios';
 import Auth from '../../../hoc/auth';
-import { MarketSNSTokenContract, SNSTokenContract } from '../../../contracts';
+import { MarketSNSTokenAddress, MarketSNSTokenContract, SNSTokenContract, web3 } from '../../../contracts';
+import NFTCard from '../../NFTCard';
 
-
-function MarketPage() {
+function ProfilePage() {
     const [feed, setFeed] = useState([]);
     const [SNSTokenArray, setSNSTokenArray] = useState([]);
     let accountAddress = useSelector(state => state.account.account);
@@ -15,11 +15,12 @@ function MarketPage() {
     else {
         accountAddress = "";
     }
+
     const getTokensInfo = async () => {
         try {
             const tempArray = [];
             const response = await SNSTokenContract.methods
-                .getTokensInfoByAccount(accountAddress)
+                .getAllTokensInfo()
                 .call();
             console.log(response);
             response.map(v => {
@@ -27,6 +28,7 @@ function MarketPage() {
                     tokenId: v.tokenId,
                     value: v.value,
                     tokenPrice: v.tokenPrice,
+                    tokenCreator: v.tokenCreator
                 });
             });
             setSNSTokenArray(tempArray);
@@ -37,13 +39,14 @@ function MarketPage() {
     }
 
     useEffect(() => {
-        getTokensInfo();
-        if (!SNSTokenArray)
-            return;
         //accountAddress에서 값을 받아오지 않았다면, 요청하지 않음.
         if (accountAddress === "")
             return;
-        Axios.get('/api/feed/getAllFeeds')
+        getTokensInfo();
+        if (!SNSTokenArray)
+            return;
+        const variables = { writer: accountAddress };
+        Axios.post('/api/feed/getFeedsByWriter', variables)
             .then(response => {
                 console.log(response);
                 if (response.data.success) {
@@ -55,37 +58,24 @@ function MarketPage() {
             })
     }, [accountAddress])
 
-
-    const onClickSale = async (tokenId, price) => {
+    const onClickApprove = async () => {
         try {
-            await MarketSNSTokenContract.methods
-                .sellToken(tokenId, price)
+            await SNSTokenContract.methods
+                .setApprovalForAll(MarketSNSTokenAddress, true)
                 .send({ from: accountAddress });
         } catch (error) {
             console.log(error);
         }
     }
 
-    const renderPrice = (SNSToken) => {
-        const price = SNSToken.tokenPrice;
-        if (price === "0")
-            return (
-                <div>
-                    <input id="price" className="input_price" type="text"></input>FTM
-                    < button className='sell_button' onClick={event => onClickSale(SNSToken.tokenId,
-                        document.getElementById("price").value)}> sell</button >
-                </div>
-            )
-        return (
-            <div>{price} FTM</div>
-        )
-    }
-
     const renderMyFeeds = feed.map((feed, index) => {
         return (
             <div className='my_feed' key={feed._id}>
-                <img className='my_image' src={`http://localhost:2400/${feed.filePath}`} alt="feed image" />
-                {SNSTokenArray.length === 0 ? (<h4>FTM</h4>) : renderPrice(SNSTokenArray[feed.tokenNum])}
+                {/* <img className='my_image' src={`http://localhost:2400/${feed.filePath}`} alt="feed image" />
+                {SNSTokenArray.length === 0 ? (<h4>FTM</h4>) : renderPrice(SNSTokenArray[feed.tokenNum])} */}
+                {SNSTokenArray.length !== 0 && <NFTCard tokenInfo={SNSTokenArray[feed.tokenNum]}
+                    feed={feed}
+                    accountAddress={accountAddress} />}
             </div>
         )
     })
@@ -93,10 +83,13 @@ function MarketPage() {
     return (
         <div id='contents_profile'>
             <div id='wrapper'>
+                <div id='approve_button_wrapper'>
+                    < button className='approve_button' onClick={onClickApprove}> approve</button>
+                </div>
                 {renderMyFeeds}
             </div>
         </div>
     );
 }
 
-export default Auth(MarketPage, true);
+export default Auth(ProfilePage, true);

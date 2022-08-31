@@ -42,8 +42,8 @@ export function getLocation() {
 
 export function getLocationInfo(latitude, longitude) {
     Geocode.setApiKey(GoogleMapAPI_Key);
-    Geocode.setLanguage("kr");
-    Geocode.setRegion("kr");
+    Geocode.setLanguage("ko");
+    Geocode.setRegion("ko");
     Geocode.setLocationType("ROOFTOP");
     Geocode.enableDebug(true);
 

@@ -4,15 +4,15 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Header from "./components/views/Header/Header";
-import Footer from "./components/views/Footer/Footer";
+import Header from "./components/views/Header/Header.jsx";
+import Footer from "./components/views/Footer/Footer.jsx";
 
-import MainPage from './components/views/MainPage/MainPage';
-import UploadPage from "./components/views/UploadPage/UploadPage";
-import ProfilePage from "./components/views/ProfilePage/ProfilePage";
+import MainPage from './components/views/MainPage/MainPage.jsx';
+import UploadPage from "./components/views/UploadPage/UploadPage.jsx";
+import ProfilePage from "./components/views/ProfilePage/ProfilePage.jsx";
 
 import "./components/style/var.css";
-import MarketPage from "./components/views/MarketPage.js/MarketPage";
+import MarketPage from "./components/views/MarketPage.js/MarketPage.jsx";
 
 //componet = element, Switch = Routes
 function App() {

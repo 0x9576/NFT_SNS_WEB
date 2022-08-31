@@ -260,6 +260,11 @@ const SNSTokenABI = [
 						"type": "uint256"
 					},
 					{
+						"internalType": "address",
+						"name": "tokenCreator",
+						"type": "address"
+					},
+					{
 						"internalType": "string",
 						"name": "value",
 						"type": "string"
@@ -273,6 +278,19 @@ const SNSTokenABI = [
 				"internalType": "struct SNSToken.SNSTokenData[]",
 				"name": "",
 				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getAllTokensOwner",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
@@ -313,6 +331,11 @@ const SNSTokenABI = [
 						"internalType": "uint256",
 						"name": "tokenId",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenCreator",
+						"type": "address"
 					},
 					{
 						"internalType": "string",
@@ -368,6 +391,11 @@ const SNSTokenABI = [
 						"internalType": "uint256",
 						"name": "tokenId",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenCreator",
+						"type": "address"
 					},
 					{
 						"internalType": "string",
@@ -458,6 +486,11 @@ const SNSTokenABI = [
 				"internalType": "uint256",
 				"name": "tokenId",
 				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "tokenCreator",
+				"type": "address"
 			},
 			{
 				"internalType": "string",
@@ -640,8 +673,8 @@ const MarketSNSTokenABI = [
 ];
 
 //컨트랙트 주소
-export const SNSTokenAddress = "0xC9D4715653f29cB282Bf8772a446f1e45bF3BD21";
-const MarketSNSTokenAddress = "0x1be7B2d7aFCC15aC24Cf0E5284ecdFE7e1b94dbf";
+export const SNSTokenAddress = "0xB201C29cc129BF300df55fa5777276298bd4884e";
+export const MarketSNSTokenAddress = "0xF46b8dA83C48be6F02547b831B94f47a1EB7196C";
 
 export const web3 = new Web3(window.ethereum);
 

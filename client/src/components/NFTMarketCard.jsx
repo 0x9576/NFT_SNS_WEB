@@ -1,3 +1,4 @@
+import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MarketSNSTokenContract, web3 } from "../contracts";
 
@@ -17,6 +18,19 @@ const NFTMarketCard = (props) => {
                 .buyToken(tokenId)
                 .send({ from: accountAddress, value: tokenInfo.tokenPrice });
             if (response.status) {
+                const variables =
+                {
+                    _id: feed._id,
+                    writer: accountAddress
+                };
+                Axios.post('/api/feed/updateWriter', variables)
+                    .then(response => {
+                        console.log(response);
+                        if (response.data.success)
+                            alert('거래 완료');
+                        else
+                            alert('거래 실패');
+                    })
                 setPrice("0");
             }
         } catch (error) {

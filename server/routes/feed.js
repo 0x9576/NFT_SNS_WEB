@@ -42,6 +42,7 @@ router.post("/uploadFeed", (req, res) => {
 
 router.get('/getAllFeeds', (req, res) => {
     Feed.find()
+        .sort('updatedAt')
         .exec((err, feeds) => {
             if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, feeds })
@@ -50,9 +51,18 @@ router.get('/getAllFeeds', (req, res) => {
 
 router.post('/getFeedsByWriter', (req, res) => {
     Feed.find({ "writer": req.body.writer })
+        .sort('updatedAt')
         .exec((err, feeds) => {
             if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, feeds })
+        })
+});
+
+router.post('/updateWriter', (req, res) => {
+    Feed.updateOne({ "_id": req.body._id }, { "writer": req.body.writer })
+        .exec((err, success) => {
+            if (err) return res.status(400).send(err);
+            res.status(200).json({ success: true })
         })
 });
 

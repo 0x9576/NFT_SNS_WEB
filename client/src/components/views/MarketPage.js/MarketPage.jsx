@@ -56,17 +56,6 @@ function MarketPage() {
             })
     }, [accountAddress])
 
-
-    const onClickSale = async (tokenId, price) => {
-        try {
-            await MarketSNSTokenContract.methods
-                .sellToken(tokenId, price)
-                .send({ from: accountAddress });
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     const renderMyFeeds = feed.map((feed, index) => {
         return (
             <div className='my_feed' key={feed._id}>

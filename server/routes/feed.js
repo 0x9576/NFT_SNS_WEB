@@ -42,7 +42,7 @@ router.post("/uploadFeed", (req, res) => {
 
 router.get('/getAllFeeds', (req, res) => {
     Feed.find()
-        .sort('updatedAt')
+        .sort({ 'updatedAt': -1 })
         .exec((err, feeds) => {
             if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, feeds })
@@ -51,7 +51,7 @@ router.get('/getAllFeeds', (req, res) => {
 
 router.post('/getFeedsByWriter', (req, res) => {
     Feed.find({ "writer": req.body.writer })
-        .sort('updatedAt')
+        .sort({ 'updatedAt': -1 })
         .exec((err, feeds) => {
             if (err) return res.status(400).send(err);
             res.status(200).json({ success: true, feeds })

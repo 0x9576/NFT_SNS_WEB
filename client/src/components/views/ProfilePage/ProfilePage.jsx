@@ -69,10 +69,10 @@ function ProfilePage() {
     }
 
     const renderMyFeeds = feed.map((feed, index) => {
+        if (!SNSTokenArray[feed.tokenNum])
+            return;
         return (
             <div className='my_feed' key={feed._id}>
-                {/* <img className='my_image' src={`http://localhost:2400/${feed.filePath}`} alt="feed image" />
-                {SNSTokenArray.length === 0 ? (<h4>FTM</h4>) : renderPrice(SNSTokenArray[feed.tokenNum])} */}
                 {SNSTokenArray.length !== 0 && <NFTCard tokenInfo={SNSTokenArray[feed.tokenNum]}
                     feed={feed}
                     accountAddress={accountAddress} />}

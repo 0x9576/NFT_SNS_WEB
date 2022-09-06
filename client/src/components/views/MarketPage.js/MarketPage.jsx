@@ -56,10 +56,13 @@ function MarketPage() {
             })
     }, [accountAddress])
 
+
     const renderMyFeeds = feed.map((feed, index) => {
+        if (!SNSTokenArray[feed.tokenNum] || SNSTokenArray[feed.tokenNum].tokenPrice == "0")
+            return;
         return (
             <div className='my_feed' key={feed._id}>
-                {SNSTokenArray.length !== 0 && <NFTMarketCard tokenInfo={SNSTokenArray[feed.tokenNum]}
+                {<NFTMarketCard tokenInfo={SNSTokenArray[feed.tokenNum]}
                     feed={feed}
                     accountAddress={accountAddress} />}
             </div>

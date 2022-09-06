@@ -13,6 +13,7 @@ import ProfilePage from "./components/views/ProfilePage/ProfilePage.jsx";
 
 import "./components/style/var.css";
 import MarketPage from "./components/views/MarketPage.js/MarketPage.jsx";
+import ChatPage from "./components/views/ChatPage/ChatPage.jsx";
 
 //componet = element, Switch = Routes
 function App() {
@@ -22,8 +23,9 @@ function App() {
       <Routes>
         <Route exact path="/" element={<MainPage />} />
         <Route exact path="/upload" element={<UploadPage />} />
-        <Route exact path="/profile" element={<ProfilePage />} />
         <Route exact path="/market" element={<MarketPage />} />
+        <Route exact path="/chat" element={<ChatPage />} />
+        <Route exact path="/profile" element={<ProfilePage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

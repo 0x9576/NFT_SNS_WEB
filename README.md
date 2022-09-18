@@ -27,7 +27,7 @@ client/src/utils/API_Key.js
 export const GoogleMapAPI_Key = "Your Google Cloud API Key";
 ```
 
-## start
+## Start
 #### Start Application `server` folder
 ````
 npm run dev

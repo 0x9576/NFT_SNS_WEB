@@ -25,5 +25,4 @@ module.exports = {
 client/src/utils/API_Key.js
 ```
 export const GoogleMapAPI_Key = "Your Google Cloud API Key";
-}
 ```

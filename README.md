@@ -20,7 +20,7 @@ module.exports = {
 }
 ```
 
-## Google MAP Key
+## Google Cloud API Key
 #### This application is [Google Cloud](https://cloud.google.com/)'s Geocoding API and Maps JavaScript API required. Get API key, Add the `API_Key.js` file as follows:
 client/src/utils/API_Key.js
 ```

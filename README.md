@@ -31,4 +31,3 @@ export const GoogleMapAPI_Key = "Your Google Cloud API Key";
 #### Start Application `server` folder
 ````
 npm run dev
->>>>>>> e92072ac5276e943bbd5ad56df0f376cfd568c5d

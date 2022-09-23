@@ -1,0 +1,10 @@
+#contents_upload {
+    width: 100%;
+    text-align: center;
+}
+
+#contents_upload #wrapper {
+    width: 600px;
+    margin: auto;
+    margin-bottom: 60px;
+}

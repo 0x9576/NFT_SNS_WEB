@@ -1,12 +1,8 @@
 const express = require('express')
 const app = express()
 const port = 2400;
-const socketPort = 4800;
 
 const cors = require("cors");
-const { Server } = require("socket.io");
-const server = require("http").createServer(app);
-const socketIo = new Server(server);
 
 const bodyParser = require('body-parser');
 
@@ -28,22 +24,15 @@ mongoose.connect(config.mongoURI, {
 }).then(() => console.log('Mongo DB connected...'))
   .catch(err => console.log(err))
 
-app.get('/api/test', (req, res) => {
-  res.send("api test")
-})
+const { Server } = require("socket.io");
+const server = require("http").createServer(app);
+const socketIo = new Server(server);
 
 //소켓통신
 socketIo.on("connection", (socket) => {
-  socket.on("join", ({ roomName: room, userName: user }) => {
-    socket.join(room);
-    socketIo.to(room).emit("onConnect", `${user} 님이 입장했습니다.`);
+  socket.on("message", (message) => {
+    socketIo.emit("message", message);
   });
-
-  socket.on("message", (messageItem) => {
-    socketIo.to("room").emit("onReceive", messageItem);
-  });
-
 });
 
-server.listen(socketPort, () => { console.log(`Socket listening on port ${socketPort}!`) });
-app.listen(port, () => { console.log(`Server listening on port ${port}!`) })
+server.listen(port, () => { console.log(`Server listening on port ${port}!`) })

@@ -112,40 +112,42 @@ function UploadPage() {
     }
 
     return (
-        <div>
-            <Dropzone
-                onDrop={onDrop}
-                multiple={false} //다중파일여부
-                maxSize={100000000000000}>
-                {({ getRootProps, getInputProps }) => (
-                    <div style={{
-                        width: '600px', height: '400px', border: '1px solid lightgray', display: 'flex',
-                        alignItems: 'center', justifyContent: 'center'
-                    }} {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        {filePath ?
-                            //path에 뭔가 있을 때만 미리보기 생성.
-                            <div>
-                                <img id="preview" src={`http://localhost:2400/${filePath}`} alt="preview" />
-                            </div> :
-                            <div>사진을 여기에 끌어다 주세요</div>
-                        }
-                    </div>
-                )}
-            </Dropzone>
-            <textarea id="textarea" rows="4" cols="78" onChange={e => setDescription(e.target.value)} />
-            <div style={{ height: '200px', width: '300px' }}>
-                <GoogleMap
-                    bootstrapURLKeys={{ key: GoogleMapAPI_Key }}
-                    defaultZoom={17}
-                    center={{ lat: latitude, lng: longitude }} //현재 위치로 center가 바뀜.
-                />
+        <div id="contents_upload">
+            <div id="wrapper">
+                <Dropzone
+                    onDrop={onDrop}
+                    multiple={false} //다중파일여부
+                    maxSize={100000000000000}>
+                    {({ getRootProps, getInputProps }) => (
+                        <div style={{
+                            width: '600px', height: '400px', border: '1px solid lightgray', display: 'flex',
+                            alignItems: 'center', justifyContent: 'center'
+                        }} {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            {filePath ?
+                                //path에 뭔가 있을 때만 미리보기 생성.
+                                <div>
+                                    <img id="preview" src={`http://localhost:2400/${filePath}`} alt="preview" />
+                                </div> :
+                                <div>사진을 여기에 끌어다 주세요</div>
+                            }
+                        </div>
+                    )}
+                </Dropzone>
+                <textarea id="textarea" rows="4" cols="78" onChange={e => setDescription(e.target.value)} />
+                <div style={{ height: '200px', width: '300px' }}>
+                    <GoogleMap
+                        bootstrapURLKeys={{ key: GoogleMapAPI_Key }}
+                        defaultZoom={17}
+                        center={{ lat: latitude, lng: longitude }} //현재 위치로 center가 바뀜.
+                    />
+                </div>
+                <h4>{locationInfo}</h4>
+                <div style={{ marginBottom: '20px' }}>위치정보 공유
+                    <input type="checkbox" checked={locationShared} onChange={e => setLocationShared(!locationShared)} />
+                </div>
+                <button onClick={onSubmit}>게시글 등록하기</button>
             </div>
-            <h4>{locationInfo}</h4>
-            <div style={{ marginBottom: '20px' }}>위치정보 공유
-                <input type="checkbox" checked={locationShared} onChange={e => setLocationShared(!locationShared)} />
-            </div>
-            <button onClick={onSubmit}>게시글 등록하기</button>
         </div>
     )
 }

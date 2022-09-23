@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
+const socket = io('http://localhost:2400', {
+    reconnectionDelay: 1000,
+    reconnection: true,
+    reconnectionAttemps: 10,
+    transports: ['websocket'],
+    agent: false,
+    upgrade: false,
+    rejectUnauthorized: false
+})
 
 function ChatPage() {
     const [chat, setChat] = useState([]);
     const [message, setMessage] = useState("");
-    const [socket, setSocket] = useState();
 
     const sendMessageHandler = () => {
-        const name = "name";
-        const room = "room";
-
-        const res = socket.emit('join', { name, room }, (error) => {
-            if (error) {
-                alert(error)
-            }
-        });
-        console.log(res);
-
-        console.log(socket.emit("message", message));
+        socket.emit("message", message);
         setMessage("");
     };
 
     useEffect(() => {
-        setSocket(io('http://localhost:4800', {
-            reconnectionDelay: 1000,
-            reconnection: true,
-            reconnectionAttemps: 10,
-            transports: ['websocket'],
-            agent: false,
-            upgrade: false,
-            rejectUnauthorized: false
-        }));
-    }, [])
+        socket.on("message", (message) => {
+            setChat([...chat, message]);
+        });
+    }, [chat]);
 
     return (
         <div className="ChatPage">
@@ -43,7 +35,6 @@ function ChatPage() {
                     })}
                 </ul>
             </div>
-
             <div>
                 <h1>Chat Box</h1>
                 <input value={message} onChange={(e) => setMessage(e.target.value)} />

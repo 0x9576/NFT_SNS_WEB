@@ -27,12 +27,7 @@ mongoose.connect(config.mongoURI, {
 const { Server } = require("socket.io");
 const server = require("http").createServer(app);
 const socketIo = new Server(server);
-
-//소켓통신
-socketIo.on("connection", (socket) => {
-  socket.on("message", (message) => {
-    socketIo.emit("message", message);
-  });
-});
+const socket = require("./socket/index");
+socket(socketIo);
 
 server.listen(port, () => { console.log(`Server listening on port ${port}!`) })

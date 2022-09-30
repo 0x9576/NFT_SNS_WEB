@@ -5,7 +5,7 @@ module.exports = function (socketIo) {
         });
 
         socket.on("message", (request) => {
-            socketIo.to(request.roomName).emit("message", request.message);
+            socketIo.to(request.roomName).emit("message", request);
         });
     });
 }

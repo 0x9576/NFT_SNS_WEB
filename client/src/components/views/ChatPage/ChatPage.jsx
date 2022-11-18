@@ -63,6 +63,7 @@ function ChatPage() {
                 </div>
             )
         }
+
         else {
             return (
                 <div className="message_wrapper_sender">

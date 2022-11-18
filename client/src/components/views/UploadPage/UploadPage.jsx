@@ -36,7 +36,7 @@ function UploadPage() {
     }, [])
 
     useEffect(() => {
-        if (latitude == 37.5 && longitude == 127) return;
+        if (latitude === 37.5 && longitude === 127) return;
         getLocationInfo(latitude, longitude).then(result => setLocationInfo(result))
     }, [latitude, longitude])
 
